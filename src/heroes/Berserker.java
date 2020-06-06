@@ -20,7 +20,7 @@ public class Berserker extends Hero{
      * @param team berserker's team
      */
     protected Berserker(Team team) {
-        create​(Heroes.Role.BERSERKER,team,)
+        create​(Heroes.Role.BERSERKER,team,Party party)
     }
 
     /**
