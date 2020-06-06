@@ -1,5 +1,11 @@
 package heroes;
 
+/**
+ * Represents a virtuous hero in the venerable game of storms.
+ *
+ * @author Jesse Burdick-Pless jb4411@g.rit.edu
+ */
+
 public abstract class Hero {
     /** hero name */
     String name;
