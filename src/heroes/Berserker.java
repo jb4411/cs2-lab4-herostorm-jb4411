@@ -1,5 +1,7 @@
 package heroes;
 
+import game.Team;
+
 /**
  * Our glass cannon damage class, the berserker. Berserkers have a low amount
  * of hit points but deal the most amount of damage (in comparison to the other
@@ -20,7 +22,7 @@ public class Berserker extends Hero{
      * @param team berserker's team
      */
     protected Berserker(Team team) {
-        create​(Heroes.Role.BERSERKER,team,Party party)
+        super(Heroes.getName(team, Heroes.Role.BERSERKER), BERSERKER_HIT_POINTS);
     }
 
     /**
@@ -40,8 +42,7 @@ public class Berserker extends Hero{
      * @param enemy the enemy to attack
      */
     @Override
-    public void attack​(Hero enemy) {
-        enemy.takeDamage​(DAMAGE_AMOUNT);
-
+    public void attack(Hero enemy) {
+        enemy.takeDamage(DAMAGE_AMOUNT);
     }
 }

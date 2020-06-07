@@ -1,5 +1,7 @@
 package heroes;
 
+import game.Team;
+
 /**
  * Our glass cannon damage class, the berserker. Berserkers have a low amount
  * of hit points but deal the most amount of damage (in comparison to the other
@@ -23,7 +25,7 @@ public class Healer extends Hero {
      * @param party the healer's party
      */
     protected Healer(Team team, Party party) {
-
+        super(Heroes.getName(team, Heroes.Role.HEALER), HEALER_HIT_POINTS);
     }
     /**
      * Get this heroes role.

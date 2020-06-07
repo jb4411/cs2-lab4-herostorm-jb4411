@@ -1,5 +1,7 @@
 package heroes;
 
+import game.Team;
+
 /**
  * Represents a virtuous hero in the venerable game of storms.
  *
@@ -39,7 +41,13 @@ public abstract class Hero {
      * @return a new Hero of the correct kind
      */
     public static Hero create​(Heroes.Role role, Team team, Party party) {
-        return null;
+        if (role == Heroes.Role.BERSERKER) {
+            return new Berserker(team);
+        } else if (role == Heroes.Role.HEALER) {
+            return new Healer(team, party);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -55,7 +63,7 @@ public abstract class Hero {
      *
      * @param enemy the enemy to attack
      */
-    public abstract void attack​(Hero enemy);
+    public abstract void attack(Hero enemy);
 
     /**
      * Get the name of the hero.
@@ -76,10 +84,13 @@ public abstract class Hero {
      *
      * @param amount amount to heal
      */
-    public void heal​(int amount) {
+    public void heal(int amount) {
         System.out.println(this.name + " heals " + amount + " points");
-        this.hitPoints += amount;
-        //check if healed too much
+        if (this.hitPoints + amount > this.maxHP) {
+            this.hitPoints = maxHP;
+        } else {
+            this.hitPoints += amount;
+        }
     }
 
     /**
@@ -92,9 +103,12 @@ public abstract class Hero {
      *
      * @param amount the amount of damage to take
      */
-    public void takeDamage​(int amount) {
+    public void takeDamage(int amount) {
         System.out.println(this.name + " takes " + amount + " damage");
         this.hitPoints -= amount;
+        if (this.hitPoints < 0) {
+            this.hitPoints = 0;
+        }
     }
 
     /**
