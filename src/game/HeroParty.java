@@ -5,10 +5,7 @@ import heroes.Hero;
 import heroes.Heroes;
 import heroes.Party;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * A party is a collection of non-fallen allies that represent a team. The
@@ -22,7 +19,7 @@ import java.util.Random;
 public class HeroParty implements Party {
     Party party;
     Team team;
-    ArrayList<Hero> heroes = new ArrayList<>();
+    private LinkedList<Hero> heroes;
 
     /**
      * Create the party. Here we associate the team with the party. We then add
@@ -39,21 +36,12 @@ public class HeroParty implements Party {
     public HeroParty(Team team, int seed) {
         this.team = team;
 
-        Hero berserker = Hero.create(Heroes.Role.BERSERKER, team, null);
-        this.party.addHero(berserker);
-
-        Hero tank = Hero.create(Heroes.Role.TANK, team, null);
-        this.party.addHero(tank);
-
-        Hero healer = Hero.create(Heroes.Role.HEALER, team, party);
-        //this.party.addHero(tank);
-
-        this.heroes.add(berserker);
-        this.heroes.add(healer);
-        this.heroes.add(tank);
+        this.heroes = new LinkedList<>();
+        this.heroes.add(Hero.create(Heroes.Role.BERSERKER, team, this));
+        this.heroes.add(Hero.create(Heroes.Role.HEALER, team, this));
+        this.heroes.add(Hero.create(Heroes.Role.TANK, team, this));
 
         Collections.shuffle(this.heroes, new Random(seed));
-
     }
 
     /**
@@ -63,7 +51,7 @@ public class HeroParty implements Party {
      */
     @Override
     public void addHero(Hero hero) {
-
+        this.heroes.add(hero);
     }
 
     /**
@@ -73,7 +61,7 @@ public class HeroParty implements Party {
      */
     @Override
     public Hero removeHero() {
-        return null;
+        return this.heroes.pollFirst();
     }
 
     /**
@@ -83,7 +71,13 @@ public class HeroParty implements Party {
      */
     @Override
     public int numHeroes() {
-        return 0;
+        int result = 0;
+        for (Hero hero : this.heroes) {
+            if (!hero.hasFallen()) {
+                result++;
+            }
+        }
+        return result;
     }
 
     /**
@@ -93,7 +87,7 @@ public class HeroParty implements Party {
      */
     @Override
     public Team getTeam() {
-        return null;
+        return this.team;
     }
 
     /**
@@ -103,7 +97,7 @@ public class HeroParty implements Party {
      */
     @Override
     public List<Hero> getHeroes() {
-        return null;
+        return this.heroes;
     }
 
     /**
@@ -119,6 +113,10 @@ public class HeroParty implements Party {
      */
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder string = new StringBuilder(this.getTeam().toString() + ":\n");
+        for (Hero hero :this.heroes) {
+            string.append(hero.toString()).append("\n");
+        }
+        return string.toString();
     }
 }
