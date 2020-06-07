@@ -6,7 +6,9 @@ import heroes.Heroes;
 import heroes.Party;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A party is a collection of non-fallen allies that represent a team. The
@@ -49,6 +51,8 @@ public class HeroParty implements Party {
         this.heroes.add(berserker);
         this.heroes.add(healer);
         this.heroes.add(tank);
+
+        Collections.shuffle(this.heroes, new Random(seed));
 
     }
 
