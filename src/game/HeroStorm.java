@@ -50,7 +50,7 @@ public class HeroStorm {
     public void play() {
         while (this.dragons.numHeroes() > 0 && this.lions.numHeroes() > 0) {
             //battle info
-            System.out.println("Battle #" + roundNum + "\n==========");
+            System.out.println("\nBattle #" + roundNum + "\n==========");
             System.out.println(this.dragons.toString());
             System.out.println(this.lions.toString());
             if (this.firstMove == Team.DRAGON) {
@@ -60,16 +60,16 @@ public class HeroStorm {
                 this.first = this.lions.removeHero();
                 this.second = this.dragons.removeHero();
             }
-            System.out.println("*** " + this.first.getName() + " vs " + this.second.getName());
+            System.out.println("*** " + this.first.getName() + " vs " + this.second.getName() + "\n");
 
             //battle
             this.first.attack(second);
             if (this.second.hasFallen()) {
-                System.out.println(second.getName() + " has fallen!");
+                System.out.println(second.getName() + " has fallen!\n");
             } else {
                 this.second.attack(first);
                 if (this.first.hasFallen()) {
-                    System.out.println(first.getName() + " has fallen!");
+                    System.out.println(first.getName() + " has fallen!\n");
                 }
             }
             //re-add hero(s)
@@ -86,6 +86,12 @@ public class HeroStorm {
                 } else {
                     this.dragons.addHero(second);
                 }
+            }
+            this.roundNum++;
+            if (this.firstMove == Team.DRAGON) {
+                this.firstMove = Team.LION;
+            } else {
+                this.firstMove = Team.DRAGON;
             }
         }
         if (this.dragons.numHeroes() == 0) {
