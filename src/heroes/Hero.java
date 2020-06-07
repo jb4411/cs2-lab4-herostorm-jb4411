@@ -40,13 +40,13 @@ public abstract class Hero {
      * @param party the hero's party (only used by healer for healing)
      * @return a new Hero of the correct kind
      */
-    public static Hero create​(Heroes.Role role, Team team, Party party) {
+    public static Hero create(Heroes.Role role, Team team, Party party) {
         if (role == Heroes.Role.BERSERKER) {
             return new Berserker(team);
         } else if (role == Heroes.Role.HEALER) {
             return new Healer(team, party);
         } else {
-            return null;
+            return new Tank(team);
         }
     }
 

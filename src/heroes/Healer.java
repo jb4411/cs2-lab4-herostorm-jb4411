@@ -3,9 +3,10 @@ package heroes;
 import game.Team;
 
 /**
- * Our glass cannon damage class, the berserker. Berserkers have a low amount
- * of hit points but deal the most amount of damage (in comparison to the other
- * roles).
+ * Our dependable medic healing class. Healers have a moderate amount of hit
+ * points, but do the least amount of damage. When attacking, however, the
+ * healer will heal all non-defeated party members for a decent amount
+ * (including themselves).
  *
  * @author Jesse Burdick-Pless jb4411@g.rit.edu
  */
@@ -18,6 +19,8 @@ public class Healer extends Hero {
     /** the healer's initial (and maximum) hit points */
     protected static final int HEALER_HIT_POINTS = 35;
 
+    private Party party;
+
     /**
      * Create a healer.
      *
@@ -26,7 +29,9 @@ public class Healer extends Hero {
      */
     protected Healer(Team team, Party party) {
         super(Heroes.getName(team, Heroes.Role.HEALER), HEALER_HIT_POINTS);
+        this.party = party;
     }
+
     /**
      * Get this heroes role.
      *
@@ -34,7 +39,7 @@ public class Healer extends Hero {
      */
     @Override
     public Heroes.Role getRole() {
-        return Heroes.Role.BERSERKER;
+        return Heroes.Role.HEALER;
     }
 
     /**
@@ -45,8 +50,11 @@ public class Healer extends Hero {
      * @rit.pre this hero has not fallen yet, the healer has a party
      */
     @Override
-    public void attack​(Hero enemy) {
-        enemy.takeDamage​(DAMAGE_AMOUNT);
-
+    public void attack(Hero enemy) {
+        this.heal(HEAL_AMOUNT);
+        for (Hero hero : this.party.getHeroes()) {
+            hero.heal(HEAL_AMOUNT);
+        }
+        enemy.takeDamage(DAMAGE_AMOUNT);
     }
 }
