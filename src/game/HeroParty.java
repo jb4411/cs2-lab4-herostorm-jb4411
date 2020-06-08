@@ -1,6 +1,5 @@
 package game;
 
-import heroes.Berserker;
 import heroes.Hero;
 import heroes.Heroes;
 import heroes.Party;
